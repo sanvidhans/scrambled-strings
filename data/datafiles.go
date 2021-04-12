@@ -17,31 +17,11 @@ type InputWords struct {
 	Len int
 	Word string
 }
-type InputStringData interface {
-	SetLen()
-	GetWord() string
-}
+
 type InputString struct {
 	Len int
 	InputStr string
 }
-
-func (iw *InputWords) SetLen(){
-	iw.Len = len(iw.Word)
-}
-
-func (is *InputString) SetLen() {
-	is.Len = len(is.InputStr)
-}
-
-func (iw *InputWords) GetWord() string {
-	return iw.Word
-}
-
-func (is *InputString) GetWord() string {
-	return is.InputStr
-}
-
 
 func ReadDictionary() ([]InputWords, error) {
 	var (
@@ -69,7 +49,7 @@ func ReadDictionary() ([]InputWords, error) {
 			Word: strings.TrimSpace(dS.Text()),
 		}
 
-		if v.Len > WORD_MAX_LENGTH || v.Len < 2 {
+		if v.Len > WORD_MAX_LENGTH || v.Len < WORD_MIN_LENGTH {
 			return inputsWords, errors.New("dictionary words are with low length")
 		}
 

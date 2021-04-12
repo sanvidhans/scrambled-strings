@@ -1,13 +1,13 @@
 package validation
 
 import (
-	"github.com/sanvidhans/scrmabled-strings/data"
-	"log"
+	"fmt"
+	"github.com/sanvidhans/scrambled-strings/data"
 )
 
 func ValidateFiles()  {
 	if data.DictionaryFilePath == "" || data.InputFilePath == "" {
-		log.Println("Please enter dictionary and input file path.")
+		fmt.Println("please enter dictionary and input file path")
 		return
 	}
 }

@@ -1,3 +1,3 @@
-module github.com/sanvidhans/scrmabled-strings
+module github.com/sanvidhans/scrambled-strings
 
 go 1.13

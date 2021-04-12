@@ -1,18 +1,11 @@
-package scrambled
+package process
 
 import (
-	"github.com/sanvidhans/scrmabled-strings/data"
+	"github.com/sanvidhans/scrambled-strings/data"
 	"strconv"
 	"strings"
 )
 
-func buildScrambledWords(len int, word string) []string {
-	return []string{""}
-}
-
-func checkSubString(scrambledString string, scrambledWord string) bool {
-	return true
-}
 
 func getPermutations(originalWord string) []string {
 	var permutations []string

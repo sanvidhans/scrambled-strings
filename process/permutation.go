@@ -1,4 +1,4 @@
-package scrambled
+package process
 
 //Perm calls f with each permutation of a
 func Perm(a []rune, f func([]rune)){
