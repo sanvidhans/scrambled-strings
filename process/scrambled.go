@@ -38,14 +38,22 @@ func CountScrambledWord(words []data.InputWords, inputString []data.InputString)
 
 		for _, v := range allPossiblePermutations {
 			lineNumber, found := findSubStringInScrambledString(v, inputString)
+
 			if found {
 				wordCount += 1
+				caseNumber := strconv.Itoa(lineNumber)
 
-				caseNumber := "case#"+strconv.Itoa(lineNumber)
-				counts[caseNumber] = wordCount
+				if counts[caseNumber] == 0 {
+					counts[caseNumber] = 1
+					wordCount = 1
+				}else{
+					counts[caseNumber] = wordCount
+				}
+
 				break
 			}
 		}
+
 	}
 	return counts
 }
@@ -53,16 +61,19 @@ func CountScrambledWord(words []data.InputWords, inputString []data.InputString)
 
 func findSubStringInScrambledString(sub string, scrambledStrings []data.InputString) (int, bool) {
 	var caseCount int
+	var found bool
 
 	if len(scrambledStrings) > 0 {
-		caseCount = 1
-		for i, scr := range scrambledStrings {
-			caseCount += i
+		var i int
+		for i = 0; i<len(scrambledStrings); i++{
 
-			 if strings.Contains(scr.InputStr, sub){
-				return caseCount, true
+			 if strings.Contains(scrambledStrings[i].InputStr, sub){
+			 	found = true
+			 	break
 			 }
 		}
+
+		return i+1, found
 	}
 
 	return caseCount, false

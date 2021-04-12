@@ -12,6 +12,9 @@ WORKDIR /app
 # Copy go mod and sum files
 COPY go.mod go.sum ./
 
+COPY sampleFiles/dictionary.txt ./
+COPY sampleFiles/inputs.txt ./
+
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
@@ -25,4 +28,4 @@ RUN go build -o scrambled-strings .
 #EXPOSE 8080
 
 # Command to run the executable
-CMD ["./scrambled-strings"]
+CMD ["./scrambled-strings --dictionary sampleFiles/disctionary.txt --input inputs.txt"]

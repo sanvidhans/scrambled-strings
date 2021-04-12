@@ -38,6 +38,6 @@ func main(){
 	counts := process.CountScrambledWord(dictionaryWords, scrambledStrings)
 
 	for k, va := range counts {
-		fmt.Println(k, ":", va)
+		fmt.Println("Case#",k, va)
 	}
 }
