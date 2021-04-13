@@ -28,4 +28,4 @@ RUN go build -o scrambled-strings .
 #EXPOSE 8080
 
 # Command to run the executable
-CMD ["./scrambled-strings --dictionary sampleFiles/disctionary.txt --input inputs.txt"]
+#CMD ["./scrambled-strings --dictionary sampleFiles/disctionary.txt --input inputs.txt"]

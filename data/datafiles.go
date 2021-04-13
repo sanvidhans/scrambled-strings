@@ -23,15 +23,16 @@ type InputString struct {
 	InputStr string
 }
 
-func ReadDictionary() ([]InputWords, error) {
+func ReadDictionaryWords(dictionaryFilePath string) ([]InputWords, error) {
 	var (
 		inputsWords []InputWords
 		totalWords int
+		duplicateWords = make(map[string]bool)
 	)
 
-	dFile, err := os.Open(DictionaryFilePath)
+	dFile, err := os.Open(dictionaryFilePath)
 	if err != nil {
-		return inputsWords, err
+		return inputsWords, errors.New("dictionary file not found")
 	}
 
 	defer func() ([]InputWords, error) {
@@ -46,18 +47,21 @@ func ReadDictionary() ([]InputWords, error) {
 	for dS.Scan() {
 		v := InputWords{
 			Len: len(strings.TrimSpace(dS.Text())),
-			Word: strings.TrimSpace(dS.Text()),
+			Word: strings.TrimSpace(strings.ToLower(dS.Text())),
 		}
 
 		if v.Len > WORD_MAX_LENGTH || v.Len < WORD_MIN_LENGTH {
-			return inputsWords, errors.New("dictionary words are with low length")
+			return inputsWords, errors.New("dictionary words should be minimum 2 and maximum 105 character long")
 		}
 
-		inputsWords = append(inputsWords, v)
-		totalWords += v.Len
+		if duplicateWords[v.Word] == false {
+			inputsWords = append(inputsWords, v)
+			totalWords += v.Len
+			duplicateWords[v.Word] = true
+		}
 
 		if totalWords > WORDS_MAX_LENGHT {
-			return inputsWords, errors.New("dictionary words are with out off length")
+			return inputsWords, errors.New("dictionary total words length should be less than or equal to 105 characters")
 		}
 	}
 
@@ -69,12 +73,12 @@ func ReadDictionary() ([]InputWords, error) {
 	return inputsWords, nil
 }
 
-func ReadScrambledStrings() ([]InputString, error) {
+func ReadScrambledStrings(inputFilePath string) ([]InputString, error) {
 	var (
 		inputStrings []InputString
 	)
 
-	iFile, err := os.Open(InputFilePath)
+	iFile, err := os.Open(inputFilePath)
 	if err != nil {
 		return inputStrings, err
 	}
@@ -91,11 +95,11 @@ func ReadScrambledStrings() ([]InputString, error) {
 	for scmData.Scan() {
 		v := InputString{
 			Len: len(strings.TrimSpace(scmData.Text())),
-			InputStr: strings.TrimSpace(scmData.Text()),
+			InputStr: strings.TrimSpace(strings.ToLower(scmData.Text())),
 		}
 
 		if v.Len > WORD_MAX_LENGTH || v.Len < 2 {
-			return inputStrings, errors.New("scrambled string is should be less than 105 character")
+			return inputStrings, errors.New("scrambled string should be less than 105 character")
 		}
 
 		inputStrings = append(inputStrings, v)

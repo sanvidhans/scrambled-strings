@@ -2,12 +2,11 @@ package process
 
 import (
 	"github.com/sanvidhans/scrambled-strings/data"
-	"strconv"
 	"strings"
 )
 
 
-func getPermutations(originalWord string) []string {
+func GetMiddleWordPermutations(originalWord string) []string {
 	var permutations []string
 	if len(originalWord) <= 3 {
 		permutations = append(permutations, originalWord)
@@ -29,25 +28,24 @@ func getPermutations(originalWord string) []string {
 	return permutations
 }
 
-func CountScrambledWord(words []data.InputWords, inputString []data.InputString) map[string]int {
-	counts := make(map[string]int)
+func CountScrambledWord(words []data.InputWords, inputString []data.InputString) map[int]int {
+	wCounts := make(map[int]int)
 
 	wordCount := 0
 	for _, w := range words {
-		allPossiblePermutations := getPermutations(w.Word)
+		allPossiblePermutations := GetMiddleWordPermutations(w.Word)
 
 		for _, v := range allPossiblePermutations {
-			lineNumber, found := findSubStringInScrambledString(v, inputString)
+			lineNumber, found := FindSubStringInScrambledString(v, inputString)
 
 			if found {
 				wordCount += 1
-				caseNumber := strconv.Itoa(lineNumber)
 
-				if counts[caseNumber] == 0 {
-					counts[caseNumber] = 1
+				if wCounts[lineNumber] == 0 {
+					wCounts[lineNumber] = 1
 					wordCount = 1
 				}else{
-					counts[caseNumber] = wordCount
+					wCounts[lineNumber] = wordCount
 				}
 
 				break
@@ -55,25 +53,24 @@ func CountScrambledWord(words []data.InputWords, inputString []data.InputString)
 		}
 
 	}
-	return counts
+
+	return wCounts
 }
 
-
-func findSubStringInScrambledString(sub string, scrambledStrings []data.InputString) (int, bool) {
+func FindSubStringInScrambledString(sub string, scrambledStrings []data.InputString) (int, bool) {
 	var caseCount int
 	var found bool
-
 	if len(scrambledStrings) > 0 {
-		var i int
-		for i = 0; i<len(scrambledStrings); i++{
 
+		for i := 0; i < len(scrambledStrings); i++ {
+			caseCount = i
 			 if strings.Contains(scrambledStrings[i].InputStr, sub){
 			 	found = true
 			 	break
 			 }
 		}
 
-		return i+1, found
+		return caseCount+1, found
 	}
 
 	return caseCount, false
