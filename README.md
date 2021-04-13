@@ -1,11 +1,11 @@
-# Scrmabled-strings
+# Scrambled-strings
 It's a solution to find out how many of the words from a dictionary file appear as substrings in a long string of
 characters either in their original form or in their scrambled form.
 
-### Descreption
+### Description
 To run this assignment we need to have two file which will be used to fetch dictionary words and input scrambled strings.
 So for this program we two files
-1. Dictionary file with multiple word on new line and each word on new line.
+1. Dictionary file with multiple words on new line and each word on new line.
 
 Ex: dictionary.txt
 ```
